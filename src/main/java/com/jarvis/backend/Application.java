@@ -1,117 +1,51 @@
 package com.jarvis.backend;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
-        String str = "Issac";
+        // program a count the frequency of each character
+        // using java stream
 
-        String input = "ISSAC";
-        // first non repeating character from the string
+        String str = "HelLO World HelLO World HelLO World HelLO World";
 
-        List<String> sentences = Arrays.asList("Java is great", "Stream API is powerful");
+        Map<Character, Long> result = str.chars()
+                            .mapToObj(c->(char)c)
+                            .filter(c-> !Character.isWhitespace(c))
+                            .map(Character::toUpperCase)
+                                .collect(Collectors.groupingBy(Function.identity(),
+                                        LinkedHashMap::new,
+                                        Collectors.counting()));
 
-        Set<String> set = sentences.stream()
-                        .flatMap(sentence->
-                            Arrays.stream(sentence.split(" ")))
-                                        .collect(Collectors.toSet());
-
-        System.out.println(set);
-
-
-
-
-
-
-
-
-
-
-        System.out.println(input.chars()
-                .mapToObj(c->(char)c)
-                .collect(
-                        LinkedHashMap::new,
-                        (map, c)-> map.put(c, (Integer)map.getOrDefault(map.get(c),0) + 1),
-                        Map::putAll
-                )
-                .entrySet()
-                .stream().filter(
-                        entry->{
-                            Integer res = (Integer) entry.getValue();
-                            return res == 1;
-                        }
-                )
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(null));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//        Object result =  str.chars() // Convert the string to an IntStream
-//                .mapToObj(c -> (char) c) // Convert each int to a Character
-//                .collect(
-//                        LinkedHashMap::new, // Preserve insertion order
-//                        (map, c) -> map.put(c, (Integer)map.getOrDefault(c, 0) + 1), // Count occurrences
-//                        Map::putAll // Merge step (not needed here)
-//                )
-//                .entrySet()
-//                .stream()
-//                .filter(entry -> {
-//                    Integer res = (Integer) entry.getValue();
-//                   return res == 1;
-//                }) // Filter characters with count 1
-//                .map(Map.Entry::getKey) // Extract the key (character)
-//                .findFirst() // Find the first non-repeating character
-//                .orElse(null);
-
-//        System.out.println(result);
-
-        Map<Character, Integer> map = new LinkedHashMap<>();
-//
-//        for(char c: str.toCharArray()){
-//            map.put(c, map.getOrDefault(c, 0)+1);
-//        }
-//
-//        for(char c: str.toCharArray()){
-//            if(map.get(c) == 1){
-//                System.out.println(c);
-//                break;
-//            }
-//        }
-
+        result.forEach((key, value)-> System.out.println(key + "-> " + value));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
