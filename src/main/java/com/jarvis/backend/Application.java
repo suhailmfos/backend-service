@@ -14,7 +14,7 @@ public class Application {
         // program a count the frequency of each character
         // using java stream
 
-        String str = "HelLO World HelLO World HelLO World HelLO World";
+        String str = "Abra ka dabra";
 
         Map<Character, Long> result = str.chars()
                             .mapToObj(c->(char)c)
