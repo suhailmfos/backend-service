@@ -1,8 +1,12 @@
 package com.jarvis.backend.util;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +14,8 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-
-    private final String SECRET_KEY = "your_secret_key";
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final String SECRET_KEY = java.util.Base64.getEncoder().encodeToString(key.getEncoded());
 
     // Generate JWT Token
     public String generateToken(String username) {
@@ -33,6 +37,10 @@ public class JwtUtil {
     public boolean validateToken(String token, String username) {
         final String tokenUsername = extractUsername(token);
         return (username.equals(tokenUsername) && !isTokenExpired(token));
+    }
+
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
     }
 
     public String extractUsername(String token) {
@@ -59,4 +67,3 @@ public class JwtUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 }
-
