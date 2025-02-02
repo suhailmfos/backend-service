@@ -3,10 +3,12 @@ package com.jarvis.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "authorities")
+@EqualsAndHashCode(exclude = "user")
 public class Authority {
 
     @Id
