@@ -14,6 +14,9 @@
 	<name>JarvisProject</name>
 	<description>Jarvis Project for Backend</description>
 	<properties>
+		<sonar.projectKey>springboot-app</sonar.projectKey>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>6ee3d223fefaad4d37b1423386af5f1099554622</sonar.login>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -113,6 +116,11 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
