@@ -6,13 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SpringdocConfig {
+public class SpringDocConfig {
     @Bean
     public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("My API")
-                        .version("1.0")
-                        .description("API Documentation for My Application"));
+        return new OpenAPI().info(new Info().title("My API").version("1.0").description("API Documentation for My Application"));
     }
 }

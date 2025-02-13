@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserService userService;
@@ -53,13 +53,13 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/api/auth/register/admin")
+    @PostMapping("/register/admin")
     public ResponseEntity<String> registerAdmin(@Valid  @RequestBody RegisterUserRequest request){
         userService.registerUser(request, "ROLE_ADMIN");
         return ResponseEntity.ok("User registered successfully!");
     }
 
-    @PostMapping("api/auth/register/user")
+    @PostMapping("/register/user")
     public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserRequest request) {
         userService.registerUser(request, "ROLE_USER");
         return ResponseEntity.ok("User registered successfully!");
