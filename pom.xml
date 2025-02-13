@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.jarvis.backend</groupId>
 	<artifactId>JarvisProject</artifactId>
@@ -14,9 +14,9 @@
 	<name>JarvisProject</name>
 	<description>Jarvis Project for Backend</description>
 	<properties>
-		<sonar.projectKey>springboot-app</sonar.projectKey>
+		<sonar.projectKey>backend-task</sonar.projectKey>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>6ee3d223fefaad4d37b1423386af5f1099554622</sonar.login>
+		<sonar.login>${env.SONAR_TOKEN}</sonar.login>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -91,35 +91,21 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>3.12.4</version>
-			<scope>test</scope>
-		</dependency>
 
-		<!-- JUnit 5 (Jupiter) for writing tests -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.1</version>
-			<scope>test</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.7.1</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M7</version>
+			</plugin>
+			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.9.1.2184</version>
+				<version>4.0.0.4121</version>  <!-- Explicit version -->
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
