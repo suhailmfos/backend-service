@@ -37,10 +37,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register/**", "/api/auth/login/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/**").permitAll()
+//                        .requestMatchers("/api/auth/register/**", "/api/auth/login/**").permitAll()
+//                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+//                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session ->

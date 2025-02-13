@@ -1,24 +1,22 @@
 package com.jarvis.backend.controller;
 
-import com.jarvis.backend.dto.RegisterUserRequest;
 import com.jarvis.backend.model.AuthRequest;
 import com.jarvis.backend.service.UserService;
 import com.jarvis.backend.util.JwtUtil;
-import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping()
 public class AuthController {
 
     private final UserService userService;
@@ -40,7 +38,13 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/login")
+    @GetMapping("/")
+    public ResponseEntity<Void> redirectToDocs(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui.html");
+        return ResponseEntity.status(HttpStatus.FOUND).build();
+    }
+
+    @PostMapping("/api/auth/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
@@ -53,15 +57,15 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/register/admin")
-    public ResponseEntity<String> registerAdmin(@Valid  @RequestBody RegisterUserRequest request){
-        userService.registerUser(request, "ROLE_ADMIN");
-        return ResponseEntity.ok("User registered successfully!");
-    }
-
-    @PostMapping("/register/user")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserRequest request) {
-        userService.registerUser(request, "ROLE_USER");
-        return ResponseEntity.ok("User registered successfully!");
-    }
+//    @PostMapping("/register/admin")
+//    public ResponseEntity<String> registerAdmin(@Valid  @RequestBody RegisterUserRequest request){
+//        userService.registerUser(request, "ROLE_ADMIN");
+//        return ResponseEntity.ok("User registered successfully!");
+//    }
+//
+//    @PostMapping("/register/user")
+//    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserRequest request) {
+//        userService.registerUser(request, "ROLE_USER");
+//        return ResponseEntity.ok("User registered successfully!");
+//    }
 }
