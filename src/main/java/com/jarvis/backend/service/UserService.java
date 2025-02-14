@@ -1,6 +1,7 @@
 package com.jarvis.backend.service;
 
 
+import com.jarvis.backend.config.exceptions.UserAlreadyExistsException;
 import com.jarvis.backend.dto.RegisterUserRequest;
 import com.jarvis.backend.model.Authority;
 import com.jarvis.backend.model.UserEntity;
@@ -24,8 +25,8 @@ public class UserService {
 
     @Transactional
     public void registerUser(RegisterUserRequest request, String role){
-        if(userRepository.findByUsername(request.getUsername()).isPresent()){
-            throw new RuntimeException("User already exists...");
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new UserAlreadyExistsException("User with username '" + request.getUsername() + "' already exists");
         }
 
         UserEntity user = new UserEntity();
