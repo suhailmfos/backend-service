@@ -79,6 +79,8 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
+
+
     @PostMapping("/register/user")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest request) throws Exception {
         try {
