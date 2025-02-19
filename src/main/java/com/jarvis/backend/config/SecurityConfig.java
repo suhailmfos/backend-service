@@ -1,7 +1,5 @@
 package com.jarvis.backend.config;
 
-import com.jarvis.backend.util.JwtFilter;
-import com.jarvis.backend.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +28,14 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtUtil jwtUtil;
-
     private final CorsConfig corsConfig;
 
     private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtUtil jwtUtil, CorsConfig corsConfig) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService, CorsConfig corsConfig) {
         this.customUserDetailsService = customUserDetailsService;
-        this.jwtUtil = jwtUtil;
         this.corsConfig = corsConfig;
-    }
-
-    @Bean
-    public JwtFilter jwtFilter() {
-        return new JwtFilter(customUserDetailsService, jwtUtil);
     }
 
     @Bean
@@ -55,7 +45,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable).cors(Customizer.withDefaults())
+        http.csrf(AbstractHttpConfigurer::disable).cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
@@ -69,6 +59,11 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .formLogin(login -> login
+                        .loginPage("/")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessHandler((request, response, authentication) -> {
@@ -79,8 +74,9 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
-                )
-                .build();
+                );
+
+        return http.build();
     }
 
     @Bean

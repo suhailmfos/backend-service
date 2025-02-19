@@ -57,7 +57,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest, HttpServletRequest request) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             request.getSession(true);
 
@@ -94,7 +96,8 @@ public class AuthController {
     public ResponseEntity<?> getCurrentUser(HttpSession session) {
         SecurityContext securityContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
 
-        if (securityContext == null || securityContext.getAuthentication() == null || !securityContext.getAuthentication().isAuthenticated() || "anonymousUser".equals(securityContext.getAuthentication().getPrincipal())) {
+        if (securityContext == null || securityContext.getAuthentication() == null || !securityContext.getAuthentication().isAuthenticated() ||
+                "anonymousUser".equals(securityContext.getAuthentication().getPrincipal())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\": \"User is not authenticated\"}");
         }
 
