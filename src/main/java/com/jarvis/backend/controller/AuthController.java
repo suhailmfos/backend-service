@@ -5,7 +5,6 @@ import com.jarvis.backend.config.exceptions.UserAlreadyExistsException;
 import com.jarvis.backend.dto.RegisterUserRequest;
 import com.jarvis.backend.model.AuthRequest;
 import com.jarvis.backend.service.UserService;
-import com.jarvis.backend.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,7 +31,7 @@ public class AuthController {
 
     private final UserService userService;
     private AuthenticationManager authenticationManager;
-    private JwtUtil jwtUtil;
+
 
     @Autowired
     public AuthController(UserService userService) {
@@ -42,11 +41,6 @@ public class AuthController {
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-    }
-
-    @Autowired
-    public void setJwtUtil(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
     }
 
     @GetMapping("/")
