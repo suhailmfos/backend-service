@@ -27,6 +27,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping()
+@CrossOrigin(origins = {"http://localhost:3000", "https://suhailmfos.github.io/suhail-service"}, allowCredentials = "true")
 public class AuthController {
 
     private final UserService userService;
@@ -78,8 +79,6 @@ public class AuthController {
         userService.registerUser(request, "ROLE_ADMIN");
         return ResponseEntity.ok("User registered successfully!");
     }
-
-
 
     @PostMapping("/register/user")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest request) throws Exception {
