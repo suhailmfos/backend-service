@@ -13,13 +13,34 @@ import java.util.List;
 public class CorsConfig {
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000", "https://suhailmfos.github.io/suhail-service")); // ✅ Replace with your React frontend URL
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // ✅ Required if using cookies or Authorization headers
 
+        // ✅ Specify allowed frontend URLs
+        config.setAllowedOrigins(List.of(
+                "https://suhailmfos.github.io/suhail-service",
+                "http://localhost:3000"
+        ));
+
+        // ✅ Allow specific HTTP methods
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // ✅ Allow specific headers instead of "*"
+        config.setAllowedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Accept",
+                "Origin",
+                "X-Requested-With"
+        ));
+
+        // ✅ Allow credentials (for cookies or tokens)
+        config.setAllowCredentials(true);
+
+        // ✅ Expose specific headers to frontend
+        config.setExposedHeaders(List.of("Authorization"));
+
+        // ✅ Register CORS configuration for all endpoints
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
@@ -27,7 +48,7 @@ public class CorsConfig {
     }
 
     @Bean
-    public CorsFilter corsFilter(){
+    public CorsFilter corsFilter() {
         return new CorsFilter(corsConfigurationSource());
     }
 }

@@ -5,6 +5,8 @@ import com.jarvis.backend.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +37,11 @@ public class SecurityConfig {
         this.jwtUtil = jwtUtil;
         this.corsConfig = corsConfig;
     }
+
+//    @Bean
+//    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerFactoryCustomizer() {
+//        return factory -> factory.addRedirect(80, 443);
+//    }
 
     @Bean
     public JwtFilter jwtFilter() {
