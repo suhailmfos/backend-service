@@ -15,7 +15,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000")); // ✅ Replace with your React frontend URL
+        config.setAllowedOrigins(List.of("http://localhost:3000", "https://suhailmfos.github.io/suhail-service")); // ✅ Replace with your React frontend URL
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // ✅ Required if using cookies or Authorization headers
