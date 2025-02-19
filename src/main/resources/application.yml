@@ -1,5 +1,11 @@
 server:
   port: ${PORT:8080}
+  servlet:
+    session:
+      cookie:
+        secure: true   # ✅ Required for HTTPS
+        http-only: true
+        same-site: None  # ✅ Required for cross-origin cookies
 
 spring:
   datasource:
@@ -16,6 +22,7 @@ spring:
       hibernate:
         format_sql: true
     open-in-view: false
+
 
 logging:
   level:
