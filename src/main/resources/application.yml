@@ -9,9 +9,12 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://monorail.proxy.rlwy.net:12868/railway
+#    url: jdbc:postgresql://monorail.proxy.rlwy.net:12868/railway
+#    username: postgres
+#    password: MUeAsaxOSnvamWpVMNzvUhmAoNnBhXRy
+    url: jdbc:postgresql://localhost:5432/railway
     username: postgres
-    password: MUeAsaxOSnvamWpVMNzvUhmAoNnBhXRy
+    password: root
     driver-class-name: org.postgresql.Driver
   jpa:
     #    database-platform: org.hibernate.dialect.PostgreSQLDialect
