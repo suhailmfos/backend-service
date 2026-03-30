@@ -3,30 +3,37 @@ server:
   servlet:
     session:
       cookie:
-        secure: true   # ✅ Required for HTTPS
+        secure: true
         http-only: true
-        same-site: None  # ✅ Required for cross-origin cookies
+        same-site: None
 
 spring:
   datasource:
-#    url: jdbc:postgresql://monorail.proxy.rlwy.net:12868/railway
-#    username: postgres
-#    password: MUeAsaxOSnvamWpVMNzvUhmAoNnBhXRy
-    url: jdbc:postgresql://localhost:5432/railway
-    username: postgres
+    url: jdbc:mysql://localhost:3306/db2?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
     password: root
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
   jpa:
-    #    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update  # Options: none, validate, update, create, create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        jdbc:
+          time_zone: UTC
     open-in-view: false
-
 
 logging:
   level:
     org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
